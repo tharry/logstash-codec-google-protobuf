@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package com.test.package;
+
+enum EyeColor {
+    BROWN = 0;
+    BLUE = 1;
+    GREEN = 2;
+    GREY = 3;
+}
+
+message WinkEvent {
+    int64 timestamp = 1;
+    EyeColor eye_color = 2;
+    int32 duration = 3;
+    bool is_pretty = 4;
+    string impression = 5;
+}
