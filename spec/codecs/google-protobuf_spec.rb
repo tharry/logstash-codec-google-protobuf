@@ -26,6 +26,8 @@ describe LogStash::Codecs::GoogleProtobuf do
       msg = inspected_class.new(data)
       proto_data = inspected_class.encode(msg)
 
+      IO.binwrite("proto.bin", proto_data)
+
       plugin_wink_event.decode(proto_data) do |event|
         expect(event.get("timestamp")).to eq(data[:timestamp])
         expect(event.get("eye_color")).to eq(inspected_enum.lookup(data[:eye_color]))

@@ -60,7 +60,8 @@ class LogStash::Codecs::GoogleProtobuf < LogStash::Codecs::Base
   def decode(data)
     decoded = @obj.decode data
     results = decoded.to_h
-    yield LogStash::Event.new(results) if block_given?
+    @logger.debug("Decoded " + results.inspect.to_s)
+    yield LogStash::Event.new(results)
   end # def decode
 
   # TODO
