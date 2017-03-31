@@ -50,6 +50,8 @@ class LogStash::Codecs::GoogleProtobuf < LogStash::Codecs::Base
   #
   config :include_path, :validate => :array, :required => true
 
+  config :debug_messages, :validate => :boolean, :required => false, :default => false
+
   def register
     #@pb_metainfo = {}
     include_path.each { |path| require_pb_path(path) }
@@ -58,10 +60,17 @@ class LogStash::Codecs::GoogleProtobuf < LogStash::Codecs::Base
   end # def register
 
   def decode(data)
-    decoded = @obj.decode data
-    results = decoded.to_h
-    @logger.debug("Decoded " + results.inspect.to_s)
-    yield LogStash::Event.new(results)
+    result = begin
+      decoded = @obj.decode data
+      results = decoded.to_h
+      results
+    rescue RuntimeError
+      {poison: true}
+    end
+    if debug_messages
+      result[:pb] = data.unpack('H*')[0]
+    end
+    yield LogStash::Event.new(result)
   end # def decode
 
   # TODO

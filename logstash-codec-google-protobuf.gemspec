@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'logstash-codec-google-protobuf'
-  s.version       = '0.1.0'
+  s.version       = '0.2.0'
   s.licenses      = ['Apache-2.0']
   s.summary       = 'Logstash codec plugin to handle recent google protobuf messages'
   s.description   = 'Logstash codec plugin to handle recent google protobuf messages since existing seems obsolete'
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.metadata = { "logstash_plugin" => "true", "logstash_group" => "codec" }
 
   # Gem dependencies
-  s.add_runtime_dependency 'logstash-core-plugin-api', "~> 2.0"
+  s.add_runtime_dependency 'logstash-core-plugin-api', ">= 1.6"
   s.add_runtime_dependency 'google-protobuf', "~> 3.2"
   s.add_development_dependency 'logstash-devutils'
 end
